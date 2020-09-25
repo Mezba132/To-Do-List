@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>TO DO LIST</title>
+</head>
+<body>
+<h1>  <%= tday %> </h1>
+
+<form action="/" method="post">
+    <ul>
+        <% for(var i = 0; i < newitems.length; i++) {%>
+        <li> <%= newitems[i] %></li>
+        <% } %>
+    </ul>
+    <input type="text" name="additem">
+    <button type="submit"> ADD </button>
+</form>
+
+</body>
+</html>
