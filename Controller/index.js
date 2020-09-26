@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.urlencoded({extended : true}));
+app.use(express.static("Public"));
 app.set('view engine', 'ejs');
 
 var items = ["Wash Cloths","Make Coffe"];
