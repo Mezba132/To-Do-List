@@ -1,23 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const date = require("../ExtraModules/date");
+
 const app = express();
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.static("Public"));
 app.set('view engine', 'ejs');
 
-const items = ["Wash Cloths","Make Coffe"];
+const items = ["Make Coffe","Cook Food"];
 const listItems = [];
 
 app.get("/", (req, res) => {
- let today = new Date();
- let options = {
-  weekday : "long",
-  month   :  "short",
-  day : "numeric"
- }
- let day = today.toLocaleDateString("en-US", options);
-
+ const day = date.getDate();
  res.render("list", {worklist : day, newitems: items});
 });
 
@@ -27,7 +22,7 @@ app.post("/", (req, res) => {
  if(req.body.addbtn === "Notes")
  {
   listItems.push(item);
-  res.render("list", {worklist : "Notes", newitems : listItems});
+  res.render("list", { worklist : "Notes", newitems : listItems});
  }
  else
  {
@@ -42,7 +37,8 @@ app.get("/work", (req, res) => {
 });
 
 app.get("/about", (req, res) => {
- res.render("about");
+ const day = date.getDay();
+ res.render("about", {worklist : day});
 })
 
 module.exports = app;
