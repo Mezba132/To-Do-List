@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-    <meta charset="utf-8">
-    <title>TO DO LIST</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+<%- include('header');%>
 <div class="box" id="heading">
-    <h1>  <%= tday %> </h1>
+    <h1>  <%= worklist %> </h1>
 </div>
 
 <div class="box">
@@ -17,15 +10,9 @@
         <p> <%= newitems[i] %></p>
     </div>
         <% } %>
+        <form class="item" action="/" method="post">
+            <input type="text" name="additem" placeholder="Add Item" autocomplete="off">
+            <button type="submit" name="addbtn" value="<%= worklist %>"> + </button>
+        </form>
 </div>
-
-<form action="/" method="post">
-    <input type="text" name="additem" placeholder="Add Item" autocomplete="off">
-    <button type="submit"> + </button>
-</form>
-
-</body>
-<footer>
-    <p> NA MEZBA ©2020.</p>
-</footer>
-</html>
+<%- include('footer');%>
