@@ -39,6 +39,11 @@ h1 {
   margin-top: 10%;
 }
 
+.warning {
+  color: red;
+  text-align: center;
+}
+
 input:checked+p {
   text-decoration: line-through;
   text-decoration-color: #A683E3;

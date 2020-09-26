@@ -13,7 +13,7 @@ const listItems = [];
 
 app.get("/", (req, res) => {
  const day = date.getDate();
- res.render("list", {worklist : day, newitems: items});
+ res.render("list", {worklist : day, newitems: items, empty:""});
 });
 
 app.post("/", (req, res) => {
@@ -21,19 +21,32 @@ app.post("/", (req, res) => {
  // post response using single template
  if(req.body.addbtn === "Notes")
  {
-  listItems.push(item);
-  res.render("list", { worklist : "Notes", newitems : listItems});
+  if(item == "")
+  {
+   res.render("list",{ worklist : "Notes", newitems : listItems, empty : "List Item is Empty !!"})
+  }
+  else {
+   listItems.push(item);
+   res.render("list", { worklist : "Notes", newitems : listItems, empty : ""});
+  }
  }
  else
  {
-  items.push(item);
-  res.redirect("/");
+  if(item == "")
+  {
+   const day = date.getDate();
+   res.render("list",{ worklist : day, newitems : items, empty : "List Item is Empty !!"})
+  }
+  else {
+   items.push(item);
+   res.redirect("/");
+  }
  }
 });
 
 // Reuse list Template
 app.get("/work", (req, res) => {
- res.render("list", {worklist : "Notes", newitems : listItems});
+ res.render("list", {worklist : "Notes", newitems : listItems, empty : ""});
 });
 
 app.get("/about", (req, res) => {
