@@ -91,19 +91,35 @@ app.post("/", (req, res) => {
  }
  else
  {
-  console.log("Working On it");
+  List.findOne({name : listTitle}, (err, foundlist) => {
+      foundlist.items.push(item);
+      foundlist.save();
+      res.redirect("/" + listTitle);
+  })
  }
 });
 
 app.post("/delete", (req, res) => {
-  const checkedItem = req.body.checkbox;
-  console.log(checkedItem);
-  Item.findByIdAndRemove(checkedItem, (err) => {
-   if(!err)
-   {
-     res.redirect("/");
-   }
-  })
+  const checkedItemId = req.body.checkbox;
+  const listTitle = req.body.hiddenTitle;
+  console.log(checkedItemId);
+  if(listTitle  === date.getDate())
+  {
+      Item.findByIdAndRemove(checkedItemId, (err) => {
+          if(!err)
+          {
+              res.redirect("/");
+          }
+      })
+  }
+  else
+  {
+      List.findOneAndUpdate({name : listTitle}, {$pull : {items : {_id : checkedItemId}}}, (err, foundlist) => {
+          if(!err){
+              res.redirect("/" + listTitle);
+          }
+      })
+  }
 })
 
 module.exports = app;
