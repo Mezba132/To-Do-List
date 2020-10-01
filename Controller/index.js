@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require("../ExtraModules/date");
+const Item = require("../Models/indexSchema").Item();
 
 const app = express();
 
@@ -8,12 +9,25 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(express.static("Public"));
 app.set('view engine', 'ejs');
 
-const items = ["Make Coffe","Cook Food"];
-const listItems = [];
+
+const item1 = new Item({
+    name : "make coffe"
+})
+const item2 = new Item({
+ name : "Walk For 20 min"
+})
+
+const defaultItems = [item1,item2];
 
 app.get("/", (req, res) => {
  const day = date.getDate();
- res.render("list", {worklist : day, newitems: items, empty:""});
+ Item.insertMany(defaultItems, (err, foundlist) => {
+  if(!err)
+  {
+   console.log("Successfully Saved items to db");
+   // res.render("list", {worklist : day, newitems: foundlist, empty:""});
+  }
+ })
 });
 
 app.post("/", (req, res) => {
@@ -48,11 +62,6 @@ app.post("/", (req, res) => {
 app.get("/work", (req, res) => {
  res.render("list", {worklist : "Notes", newitems : listItems, empty : ""});
 });
-
-app.get("/about", (req, res) => {
- const day = date.getDay();
- res.render("about", {worklist : day});
-})
 
 module.exports = app;
 
