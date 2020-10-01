@@ -5,7 +5,7 @@ const route = require("./Controller/index");
 app.use(route);
 
 let port = process.env.PORT;
-if(port == null || port == "")
+if(port === null || port === "")
 {
     port = 3000;
 }
