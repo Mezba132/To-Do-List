@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost:27017/todolistsDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://admin-mezba:mezba017529@cluster0.y37cv.mongodb.net/ToDoListDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 exports.Item = () => {
     const ItemSchema = {
