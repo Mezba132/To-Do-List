@@ -16,16 +16,26 @@ const item1 = new Item({
 const item2 = new Item({
  name : "Walk For 20 min"
 })
-
 const defaultItems = [item1,item2];
+
+
 
 app.get("/", (req, res) => {
  const day = date.getDate();
- Item.insertMany(defaultItems, (err, foundlist) => {
-  if(!err)
+
+ Item.find({}, (err, founditem) => {
+  if(founditem.length === 0)
   {
-   console.log("Successfully Saved items to db");
-   // res.render("list", {worklist : day, newitems: foundlist, empty:""});
+    Item.insertMany(defaultItems, (err) => {
+     if(!err)
+     {
+      console.log("Successfully Saved items to db");
+      res.redirect("/");
+     }
+    })
+  }
+  else {
+   res.render("list", {worklist : day, newitems: founditem, empty:""});
   }
  })
 });
@@ -33,7 +43,7 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
  let item = req.body.additem;
  // post response using single template
- if(req.body.addbtn === "Notes")
+ if(req.body.addbtn === date.getDate())
  {
   if(item == "")
   {

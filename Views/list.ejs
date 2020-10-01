@@ -1,15 +1,15 @@
-<%- include('header');%>
+<%- include('partials/header');%>
 <div class="box" id="heading">
     <h1>  <%= worklist %> </h1>
 </div>
 
 <div class="box">
-    <% for(var i = 0; i < newitems.length; i++) {%>
-    <div class="item">
-        <input type="checkbox">
-        <p> <%= newitems[i] %></p>
-    </div>
-        <% } %>
+    <% newitems.forEach( (newitem) => { %>
+        <div class="item">
+            <input type="checkbox">
+            <p> <%= newitem.name %></p>
+        </div>
+    <% }) %>
         <form class="item" action="/" method="post">
             <input type="text" name="additem" placeholder="Add Item" autocomplete="off">
             <button type="submit" name="addbtn" value="<%= worklist %>"> + </button>
@@ -19,4 +19,4 @@
 <div class="warning">
     <h3> <%= empty %></h3>
 </div>
-<%- include('footer');%>
+<%- include('partials/footer');%>
