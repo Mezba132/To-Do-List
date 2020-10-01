@@ -18,7 +18,6 @@ const item2 = new Item({
 const defaultItems = [item1,item2];
 
 
-
 app.get("/", (req, res) => {
  const day = date.getDate();
 
@@ -34,7 +33,7 @@ app.get("/", (req, res) => {
     })
   }
   else {
-   res.render("list", {worklist : day, newitems: founditems, empty:""});
+   res.render("list", {listTitle : day, newitems: founditems, empty:""});
   }
  })
 });
@@ -55,7 +54,7 @@ app.post("/", (req, res) => {
    Item.find({}, (err, founditems) => {
     if(!err)
     {
-     return res.render("list",{ worklist : date.getDate(), newitems : founditems, empty : "List Item is Empty !!"});
+     return res.render("list",{ listTitle : date.getDate(), newitems : founditems, empty : "List Item is Empty !!"});
     }
    })
   }
@@ -70,10 +69,16 @@ app.post("/", (req, res) => {
  }
 });
 
-// Reuse list Template
-app.get("/work", (req, res) => {
- res.render("list", {worklist : "Notes", newitems : listItems, empty : ""});
-});
+app.post("/delete", (req, res) => {
+  let checkedItem = req.body.checkbox;
+  console.log(checkedItem);
+  Item.findByIdAndRemove(checkedItem, (err) => {
+   if(!err)
+   {
+     res.redirect("/");
+   }
+  })
+})
 
 module.exports = app;
 
